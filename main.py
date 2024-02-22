@@ -6,6 +6,13 @@ import time
 
 
 def repeat_quest():
+    """
+    Looks for the repeat quest image and repeats the quest after every 10 rounds. It also looks for the next and confirm buttons to push through prompts. 
+    This code uses pyautogui, autoit, and pydirectinput to automate the game.
+
+    Pyautogui uses the images to find the buttons on the screen but inputs seem to be blocked by the game, so I used pydirectinput to send the key presses. 
+    However, the mouse inputs from pydirectinput did not work so I finally implemented autoit to fix that issue.
+    """
     while True:
         try:
             repeat_prompt = pyautogui.locateOnScreen(
@@ -18,7 +25,7 @@ def repeat_quest():
                 pydirectinput.press("enter")
         except ImageNotFoundException:
             repeat_prompt = None
-            time.sleep(0.5)
+            time.sleep(0.2)
 
         try:
             next_button = pyautogui.locateOnScreen("./images/next.png", confidence=0.8)
@@ -26,8 +33,7 @@ def repeat_quest():
                 autoit.mouse_click("left")
                 time.sleep(1)
         except ImageNotFoundException:
-            next_button = None
-            time.sleep(0.5)
+            time.sleep(0.2)
 
         try:
             confirm = pyautogui.locateOnScreen("./images/confirm.png", confidence=0.9)
@@ -35,7 +41,7 @@ def repeat_quest():
                 autoit.mouse_click("left")
                 time.sleep(0.5)
         except ImageNotFoundException:
-            confirm = None
+            time.sleep(0.2)
 
 
 repeat_quest()
